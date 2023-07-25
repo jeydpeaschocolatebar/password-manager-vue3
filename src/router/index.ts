@@ -1,23 +1,43 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import PasswordListView from '@/views/PasswordListView.vue';
+import AboutView from '@/views/AboutView.vue';
+import NotFoundErrorView from '@/views/errors/NotFoundErrorView.vue';
+import NetworkErrorView from '@/views/errors/NetworkErrorView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'home',
-      component: HomeView
+      path: '/password-list',
+      name: 'password-list',
+      component: PasswordListView
+    },
+    {
+      path: '/about-us',
+      name: 'about',
+      component: AboutView
     },
     {
       path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
+      redirect: { name: 'about' }
+    },
+    {
+      path: '/:catchAll(.*)',
+      name: 'NotFound',
+      component: NotFoundErrorView
+    },
+    {
+      path: '/404/:resource',
+      name: '404Resource',
+      component: NotFoundErrorView,
+      props: true
+    },
+    {
+      path: '/network-error',
+      name: 'NetworkError',
+      component: NetworkErrorView
     }
   ]
-})
+});
 
-export default router
+export default router;
